@@ -35,6 +35,19 @@ export const PassportIcon = (p: IconProps) => (
   </svg>
 );
 
+export const GlobeIcon = (p: IconProps) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" aria-hidden {...p}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3Z" />
+  </svg>
+);
+
+export const ChatIcon = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="M5 3h14a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3H9.5L4 22v-4.1A3 3 0 0 1 2 15V6a3 3 0 0 1 3-3Zm2 5.6v2h10v-2H7Zm0 3.8v2h7v-2H7Z" />
+  </svg>
+);
+
 export const SuitcaseIcon = (p: IconProps) => (
   <svg {...base(p)}>
     <path
@@ -52,7 +65,7 @@ export const VisaStampIcon = (p: IconProps) => (
       y="15.9"
       textAnchor="middle"
       fontSize="9.6"
-      fontWeight="700"
+      fontWeight="600"
       fontFamily="var(--font-body), sans-serif"
       fill="currentColor"
     >
@@ -120,18 +133,6 @@ export const ChevronDownIcon = (p: IconProps) => (
   </svg>
 );
 
-export const MenuIcon = (p: IconProps) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden {...p}>
-    <path d="M4 7h16M4 12h16M4 17h16" />
-  </svg>
-);
-
-export const CloseIcon = (p: IconProps) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden {...p}>
-    <path d="M6 6l12 12M18 6 6 18" />
-  </svg>
-);
-
 export const CheckCircleIcon = (p: IconProps) => (
   <svg viewBox="0 0 24 24" aria-hidden {...p}>
     <circle cx="12" cy="12" r="11" fill="#FFBF32" />
@@ -177,7 +178,7 @@ export const WhatsAppIcon = (p: IconProps) => (
 const serviceIcons: Record<ServiceIcon, (p: IconProps) => React.JSX.Element> = {
   flight: PlaneIcon,
   bus: BusIcon,
-  "visit-visa": PassportIcon,
+  "visit-visa": GlobeIcon,
   tour: SuitcaseIcon,
   "visa-stamp": VisaStampIcon,
   insurance: ShieldCheckIcon,

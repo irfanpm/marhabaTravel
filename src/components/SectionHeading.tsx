@@ -1,26 +1,29 @@
 type Props = {
   title: string;
-  subtitle: string;
-  /** Adds the thin rules either side of the title, as in "Our Services". */
-  ruled?: boolean;
-  size?: "lg" | "md";
+  subtitle?: string;
+  /** Small label above the title. */
+  eyebrow?: string;
+  align?: "center" | "left";
 };
 
-export function SectionHeading({ title, subtitle, ruled, size = "md" }: Props) {
+export function Eyebrow({ children, light }: { children: React.ReactNode; light?: boolean }) {
   return (
-    <div className="text-center">
-      <div className="flex items-center justify-center gap-[1.1rem]">
-        {ruled && <span className="h-px w-5 bg-navy/25 min-[400px]:w-9 sm:w-[7.6rem]" />}
-        <h2
-          className={`m-0 font-heading font-bold leading-[1.15] text-navy ${
-            size === "lg" ? "text-[2.1rem] lg:text-[2rem]" : "text-[1.75rem] lg:text-[1.75rem]"
-          }`}
-        >
-          {title}
-        </h2>
-        {ruled && <span className="h-px w-5 bg-navy/25 min-[400px]:w-9 sm:w-[7.6rem]" />}
-      </div>
-      <p className={`m-0 mt-1 text-navy-dark ${size === "lg" ? "text-[0.95rem]" : "text-[0.875rem]"}`}>{subtitle}</p>
+    <p
+      className={`m-0 mb-2 text-[0.75rem] font-semibold uppercase tracking-[0.18em] ${
+        light ? "text-gold" : "text-gold-deep"
+      }`}
+    >
+      {children}
+    </p>
+  );
+}
+
+export function SectionHeading({ title, subtitle, eyebrow, align = "center" }: Props) {
+  return (
+    <div className={`reveal ${align === "center" ? "text-center" : ""}`}>
+      {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+      <h2 className="m-0 font-heading text-[1.9rem] font-bold leading-[1.18] text-navy lg:text-[2.1rem]">{title}</h2>
+      {subtitle && <p className="m-0 mt-2 text-[0.95rem] leading-[1.5] text-navy-dark/75">{subtitle}</p>}
     </div>
   );
 }

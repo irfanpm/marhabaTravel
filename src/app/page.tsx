@@ -1,10 +1,9 @@
 import { About } from "@/components/About";
-import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
+import { CtaBand } from "@/components/CtaBand";
 import { Hero } from "@/components/Hero";
 import { Packages } from "@/components/Packages";
 import { Services } from "@/components/Services";
+import { TrustBar } from "@/components/TrustBar";
 import { WhyChoose } from "@/components/WhyChoose";
 import { mapsLink, site } from "@/config/site";
 
@@ -25,6 +24,8 @@ const structuredData = {
   },
 };
 
+export const metadata = { alternates: { canonical: "/" } };
+
 export default function Home() {
   return (
     <>
@@ -32,18 +33,17 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <Header />
-      <main>
+      <main id="main">
         <Hero />
-        <div className="page-sky">
-          <Services />
+        <TrustBar />
+        <Services />
+        <div className="relative overflow-x-clip bg-page">
           <About />
-          <Packages />
         </div>
+        <Packages />
         <WhyChoose />
+        <CtaBand />
       </main>
-      <Footer />
-      <FloatingWhatsApp />
     </>
   );
 }

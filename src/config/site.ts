@@ -29,6 +29,14 @@ export const site = {
   },
 } as const;
 
+/** Public address of the site. Set NEXT_PUBLIC_SITE_URL once a custom domain is in place. */
+export const siteUrl = (
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "http://localhost:3000")
+).replace(/\/$/, "");
+
 export const whatsappLink = (message?: string) =>
   `https://wa.me/${site.whatsappNumber}${message ? `?text=${encodeURIComponent(message)}` : ""}`;
 
@@ -40,11 +48,11 @@ export const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encod
 )}`;
 
 export const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "Services", href: "#services" },
-  { label: "Tour Packages", href: "#packages" },
-  { label: "About Us", href: "#about" },
-  { label: "Contact", href: "#contact" },
+  { id: "home", label: "Home", href: "/#home" },
+  { id: "services", label: "Services", href: "/services" },
+  { id: "packages", label: "Tour Packages", href: "/#packages" },
+  { id: "about", label: "About Us", href: "/#about" },
+  { id: "contact", label: "Contact", href: "/contact" },
 ] as const;
 
 export type ServiceIcon =
@@ -57,16 +65,80 @@ export type ServiceIcon =
   | "umrah"
   | "passport";
 
-export const services: { title: string; icon: ServiceIcon }[] = [
-  { title: "Flight Tickets", icon: "flight" },
-  { title: "Bus Tickets", icon: "bus" },
-  { title: "Visit Visas", icon: "visit-visa" },
-  { title: "Tour Packages", icon: "tour" },
-  { title: "Visa Stamping", icon: "visa-stamp" },
-  { title: "Travel Insurance", icon: "insurance" },
-  { title: "Umrah Packages", icon: "umrah" },
-  { title: "Online Passport Assistance", icon: "passport" },
+export const services: {
+  slug: string;
+  title: string;
+  icon: ServiceIcon;
+  /** One line for the homepage card. */
+  summary: string;
+  /** Fuller text for the Services page. */
+  description: string;
+}[] = [
+  {
+    slug: "flight-tickets",
+    title: "Flight Tickets",
+    icon: "flight",
+    summary: "Domestic and international air ticket booking.",
+    description:
+      "Domestic and international air ticket booking, with help choosing the routes and timings that suit your trip.",
+  },
+  {
+    slug: "bus-tickets",
+    title: "Bus Tickets",
+    icon: "bus",
+    summary: "Bus ticket booking for your journey.",
+    description: "Bus ticket booking for your journey, arranged for you so there is one less thing to plan.",
+  },
+  {
+    slug: "visit-visas",
+    title: "Visit Visas",
+    icon: "visit-visa",
+    summary: "Guidance and support for visit visas.",
+    description:
+      "Guidance and application support for visit visas, including help understanding which documents to prepare.",
+  },
+  {
+    slug: "tour-packages",
+    title: "Tour Packages",
+    icon: "tour",
+    summary: "Tours planned around your destination.",
+    description: "Tour packages planned around your destination, your dates and the people travelling with you.",
+  },
+  {
+    slug: "visa-stamping",
+    title: "Visa Stamping",
+    icon: "visa-stamp",
+    summary: "Help with your visa stamping process.",
+    description: "Help with the visa stamping process, from preparing your documents to submitting them.",
+  },
+  {
+    slug: "travel-insurance",
+    title: "Travel Insurance",
+    icon: "insurance",
+    summary: "Insurance arranged for your trip.",
+    description: "Travel insurance arranged for your trip, with help understanding which cover suits your journey.",
+  },
+  {
+    slug: "umrah-packages",
+    title: "Umrah Packages",
+    icon: "umrah",
+    summary: "Umrah journeys planned with care.",
+    description: "Umrah packages planned with care, with personal support as you prepare for your pilgrimage.",
+  },
+  {
+    slug: "online-passport-assistance",
+    title: "Online Passport Assistance",
+    icon: "passport",
+    summary: "Support with online passport applications.",
+    description: "Support with online passport applications, including filling in the forms and preparing your documents.",
+  },
 ];
+
+export const serviceSteps = [
+  { title: "Tell Us What You Need", text: "Call us, message us on WhatsApp or visit our office in Aluva with your travel plans." },
+  { title: "We Guide You", text: "We explain your options and the documents needed, so you know exactly what comes next." },
+  { title: "Travel With Confidence", text: "We take care of the arrangements and stay in touch while you get ready for your journey." },
+] as const;
 
 export type PackageIcon = "umrah" | "tour" | "flight" | "palm";
 
@@ -98,7 +170,7 @@ export const packages: { title: string; image: string; alt: string; icon: Packag
 ];
 
 export const whyChoose = [
-  "Trusted & Reliable Service",
-  "Comprehensive Travel Solutions",
-  "Personalized Support",
+  { title: "Trusted & Reliable Service", text: "Clear guidance and dependable arrangements you can count on." },
+  { title: "Comprehensive Travel Solutions", text: "Tickets, visas, insurance and tours, all in one place." },
+  { title: "Personalized Support", text: "Plans shaped around your trip, with people you can talk to." },
 ] as const;

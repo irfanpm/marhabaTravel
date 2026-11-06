@@ -6,28 +6,51 @@
   --color-sky: #38a9e8;
   --color-gold: #ffbf32;
   --color-page: #f5f9ff;
+  --color-canvas: #fbfcfe;
+  --color-gold-deep: #8f6300;
   --color-why-navy: #022345;
 
   --font-heading: var(--font-playfair), Georgia, serif;
   --font-body: var(--font-poppins), system-ui, sans-serif;
   --font-script: var(--font-script-face), cursive;
-  --font-tagline: var(--font-tagline-face), cursive;
 }
 
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 4.5rem;
   -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: -4rem;
+  z-index: 60;
+  padding: 0.7rem 1.1rem;
+  border-radius: 0.6rem;
+  background: var(--color-navy);
+  color: #fff;
+  font-weight: 600;
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 0.75rem;
 }
 
 /*
- * The desktop design is proportional: 1rem equals 16px at the 1024px reference
- * width and grows with the viewport, so the page keeps the composition of the
- * reference at every desktop size.
+ * 1rem is 16px at 1024px wide and grows with the viewport only up to the 1152px
+ * layout (18px). Beyond that sizes stay fixed and the layout sits in the centre,
+ * so browser zoom keeps working on wide screens.
  */
+:root {
+  /* One pixel of the 1024px reference, capped with the layout */
+  --u: min(calc(100vw / 1024), 1.2px);
+}
+
 @media (min-width: 1024px) {
   html {
-    font-size: min(calc(100vw / 64), 30px);
+    font-size: min(calc(100vw / 64), 18px);
   }
 }
 
@@ -39,7 +62,7 @@ html {
 
 body {
   margin: 0;
-  background: #f8f9fd;
+  background: var(--color-canvas);
   color: var(--color-navy-dark);
   font-family: var(--font-body);
   overflow-x: clip;
@@ -55,6 +78,202 @@ body {
 }
 .no-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+/* --------------------------------------------------------------- Buttons */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  min-height: 2.75rem;
+  padding: 0 1.4rem;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s, translate 0.2s;
+}
+.btn:hover {
+  translate: 0 -1px;
+}
+.btn-gold {
+  background: var(--color-gold);
+  color: var(--color-navy-dark);
+  box-shadow: 0 8px 18px rgb(255 191 50 / 0.35);
+}
+.btn-gold:hover {
+  background: #ffcd5c;
+}
+.btn-navy {
+  background: var(--color-navy);
+  color: #fff;
+}
+.btn-navy:hover {
+  background: #0d3f7a;
+}
+.btn-outline {
+  border-color: var(--color-navy);
+  color: var(--color-navy);
+}
+.btn-outline:hover {
+  background: var(--color-navy);
+  color: #fff;
+}
+.btn-outline-light {
+  border-color: rgb(255 255 255 / 0.85);
+  color: #fff;
+}
+.btn-outline-light:hover {
+  background: #fff;
+  color: var(--color-navy-dark);
+}
+
+.btn:active {
+  translate: 0 0;
+  scale: 0.97;
+}
+.btn svg:last-child:not(:first-child) {
+  transition: translate 0.25s var(--ease-out);
+}
+.btn:hover svg:last-child:not(:first-child) {
+  translate: 0.22em 0;
+}
+
+/* ---------------------------------------------------------------- Motion */
+
+/* One timing curve across the site keeps every movement feeling related */
+:root {
+  --ease-out: cubic-bezier(0.22, 0.8, 0.3, 1);
+}
+
+/* Content rises into place as it scrolls into view (see ScrollReveal) */
+.reveal {
+  transition: opacity 0.55s var(--ease-out), translate 0.55s var(--ease-out);
+}
+.js .reveal:not(.is-visible) {
+  opacity: 0;
+  translate: 0 1.25rem;
+}
+/* Sideways only on wide screens, where it cannot push past the screen edge */
+@media (min-width: 1024px) {
+  .js .reveal-left:not(.is-visible) {
+    translate: -2rem 0;
+  }
+  .js .reveal-right:not(.is-visible) {
+    translate: 2rem 0;
+  }
+}
+/* Cards in a row arrive one after another */
+li.reveal:nth-child(4n + 2) { transition-delay: 0.05s; }
+li.reveal:nth-child(4n + 3) { transition-delay: 0.1s; }
+li.reveal:nth-child(4n + 4) { transition-delay: 0.15s; }
+
+.trust-in {
+  animation: hero-rise 0.6s var(--ease-out) 0.35s backwards;
+}
+.float-soft {
+  animation: float-soft 6s ease-in-out infinite;
+}
+@keyframes float-soft {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -0.35rem; }
+}
+/* WhatsApp button pops in, then sends out a soft ring now and then */
+.fab {
+  animation: fab-in 0.5s var(--ease-out) 0.8s backwards;
+}
+.fab::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: #25d366;
+  z-index: -1;
+  animation: fab-ring 4s ease-out 3s infinite;
+}
+@keyframes fab-in {
+  from { opacity: 0; scale: 0.6; }
+  to { opacity: 1; scale: 1; }
+}
+@keyframes fab-ring {
+  0% { opacity: 0.45; scale: 1; }
+  45%, 100% { opacity: 0; scale: 1.55; }
+}
+
+/* Desktop Services dropdown */
+.nav-dropdown {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  padding-top: 0.4rem;
+  opacity: 0;
+  visibility: hidden;
+  translate: 0 0.5rem;
+  transition: opacity 0.25s var(--ease-out), translate 0.25s var(--ease-out), visibility 0.25s;
+}
+.nav-dropdown.is-open {
+  opacity: 1;
+  visibility: visible;
+  translate: 0 0;
+}
+
+/* Panels that open by growing to their natural height */
+.collapse-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition: grid-template-rows 0.38s var(--ease-out), visibility 0.38s;
+}
+.collapse-panel.is-open {
+  grid-template-rows: 1fr;
+  visibility: visible;
+}
+
+/* Hamburger lines fold into a close icon */
+.burger {
+  position: relative;
+  display: block;
+  width: 1.5rem;
+  height: 1.1rem;
+}
+.burger span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2.5px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: top 0.3s var(--ease-out), rotate 0.3s var(--ease-out), opacity 0.2s;
+}
+.burger span:nth-child(1) { top: 0; }
+.burger span:nth-child(2) { top: calc(50% - 1.25px); }
+.burger span:nth-child(3) { top: calc(100% - 2.5px); }
+.burger.is-open span:nth-child(1) {
+  top: calc(50% - 1.25px);
+  rotate: 45deg;
+}
+.burger.is-open span:nth-child(2) {
+  opacity: 0;
+}
+.burger.is-open span:nth-child(3) {
+  top: calc(50% - 1.25px);
+  rotate: -45deg;
+}
+
+/* Inner page banner */
+.page-hero-copy > * {
+  animation: hero-settle 0.55s var(--ease-out) backwards;
+}
+.page-hero-plane {
+  animation: page-plane-in 1.4s var(--ease-out) 0.1s backwards;
+}
+@keyframes page-plane-in {
+  from { opacity: 0; translate: -5rem 2.5rem; scale: 0.8; }
+  to { opacity: 1; translate: 0 0; scale: 1; }
 }
 
 /* ------------------------------------------------------------------ Hero */
@@ -105,33 +324,14 @@ body {
   line-height: 1.4;
 }
 
-.hero-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
   margin-top: 1.1rem;
-  min-height: 3rem;
-  padding: 0 0.55rem 0 1.4rem;
-  border-radius: 999px;
-  background: var(--color-navy);
-  color: #fff;
-  font-weight: 600;
-  font-size: 0.9375rem;
-  box-shadow: 0 6px 16px rgb(8 45 89 / 0.25);
-  transition: background-color 0.2s, transform 0.2s;
 }
-.hero-cta:hover {
-  background: #0d3f7a;
-  transform: translateY(-1px);
-}
-.hero-cta-arrow {
-  display: grid;
-  place-items: center;
-  width: 1.9rem;
-  height: 1.9rem;
-  border-radius: 999px;
-  background: #fff;
-  color: var(--color-navy);
+.hero-actions .btn {
+  padding: 0 1.15rem;
 }
 
 .hero-visual {
@@ -158,7 +358,8 @@ body {
   right: 0.7rem;
   bottom: 41.5vw;
   transform: rotate(-9deg);
-  font-family: var(--font-tagline);
+  font-family: var(--font-script);
+  font-weight: 500;
   color: var(--color-navy);
   font-size: clamp(1.15rem, 5.6vw, 1.7rem);
   line-height: 1.05;
@@ -182,17 +383,16 @@ body {
   width: 57%;
   pointer-events: none;
   will-change: transform;
-  animation: hero-plane-in 2.4s linear 0.15s backwards;
+  animation: hero-plane-in 1.8s linear 0.1s backwards;
 }
 .hero-plane-float {
   will-change: transform;
-  animation: hero-plane-float 7s ease-in-out 2.55s infinite;
+  animation: hero-plane-float 7s ease-in-out 1.9s infinite;
 }
 .hero-plane img {
   display: block;
   width: 100%;
   height: auto;
-  filter: drop-shadow(0 0.6vw 0.8vw rgb(8 45 89 / 0.16));
 }
 
 .hero-clouds {
@@ -237,29 +437,24 @@ body {
 /* The gold arc draws itself as the plane climbs along it */
 .hero-arc {
   stroke-dasharray: 1;
-  animation: hero-arc-draw 2.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.15s backwards;
+  animation: hero-arc-draw 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s backwards;
 }
 
 /* Words arrive one after another. "translate" leaves each element's own transform free. */
 .hero-script,
-.hero-brand,
 .hero-sub-brand,
 .hero-subtitle,
-.hero-cta,
-.hero-tagline {
-  animation: hero-rise 0.8s cubic-bezier(0.22, 0.8, 0.3, 1) backwards;
+.hero-actions {
+  animation: hero-settle 0.55s var(--ease-out) backwards;
 }
-.hero-script { animation-delay: 0.1s; }
-.hero-brand { animation-delay: 0.22s; }
-.hero-sub-brand { animation-delay: 0.34s; }
-.hero-subtitle { animation-delay: 0.48s; }
-.hero-cta { animation-delay: 0.62s; }
-.hero-tagline { animation-delay: 1.5s; }
+.hero-tagline {
+  animation: hero-rise 0.55s var(--ease-out) 1.1s backwards;
+}
 .hero-tagline svg {
   transform-origin: left center;
-  animation: hero-underline 0.7s ease-out 2.1s backwards;
+  animation: hero-underline 0.6s ease-out 1.5s backwards;
 }
-.hero-cta-arrow svg {
+.hero-actions .btn-gold svg {
   animation: hero-arrow-nudge 3.2s ease-in-out 3s infinite;
 }
 
@@ -288,6 +483,10 @@ body {
   from { opacity: 0; translate: 0 0.9rem; }
   to { opacity: 1; translate: 0 0; }
 }
+@keyframes hero-settle {
+  from { translate: 0 0.45rem; }
+  to { translate: 0 0; }
+}
 @keyframes hero-underline {
   from { transform: scaleX(0); }
   to { transform: scaleX(1); }
@@ -299,9 +498,15 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero *,
-  .hero *::before {
+  *,
+  *::before,
+  *::after {
     animation: none !important;
+    transition: none !important;
+  }
+  .js .reveal:not(.is-visible) {
+    opacity: 1;
+    translate: none;
   }
 }
 
@@ -318,60 +523,66 @@ body {
 @media (min-width: 768px) {
   /* --u is one pixel of the 1024px reference */
   .hero {
-    --u: calc(100vw / 1024);
     height: calc(var(--u) * 470);
-    background: #e8f2fb;
+    /* Matches the left edge of the sky photo, which fades into it on wide screens */
+    background: linear-gradient(to bottom, #fefefe 0%, #f6f9fe 34%, #edf6fe 68%, #f0f6fc 100%);
   }
   .hero-copy {
     position: absolute;
-    left: calc(var(--u) * 44);
-    top: calc(var(--u) * 104);
+    left: calc(2.2rem + max(0px, (100vw - 64rem) / 2));
+    top: calc(var(--u) * 92);
     padding: 0;
   }
   .hero-script {
-    font-size: calc(var(--u) * 41);
+    font-size: calc(var(--u) * 37);
     line-height: 1.2;
   }
   .hero-brand {
-    font-size: calc(var(--u) * 73);
-    line-height: 1.1;
-    margin-top: calc(var(--u) * 6);
+    font-size: calc(var(--u) * 66);
+    line-height: 1.08;
+    margin-top: calc(var(--u) * 3);
   }
   .hero-sub-brand {
-    font-size: calc(var(--u) * 36);
+    font-size: calc(var(--u) * 30);
+    letter-spacing: 0.082em;
     line-height: 1.2;
-    margin-top: calc(var(--u) * 1);
+    margin-top: calc(var(--u) * 2);
   }
   .hero-subtitle {
     margin-top: calc(var(--u) * 12);
-    font-size: calc(var(--u) * 19.5);
-    line-height: 1.3;
+    font-size: max(0.85rem, calc(var(--u) * 16.5));
+    line-height: 1.45;
   }
-  .hero-cta {
-    margin-top: calc(var(--u) * 22);
-    min-height: 2.75rem;
-    padding: 0 calc(var(--u) * 12) 0 calc(var(--u) * 22);
-    font-size: calc(var(--u) * 14.5);
-    gap: calc(var(--u) * 12);
-    box-shadow: none;
+  .hero-actions {
+    margin-top: calc(var(--u) * 18);
+    gap: calc(var(--u) * 10);
   }
-  .hero-cta-arrow {
-    width: calc(var(--u) * 26);
-    height: calc(var(--u) * 26);
-  }
-  .hero-cta-arrow svg {
-    width: 55%;
-    height: 55%;
+  .hero-actions .btn {
+    padding: 0 calc(var(--u) * 19);
+    font-size: max(0.8rem, calc(var(--u) * 13.5));
   }
   .hero-visual {
     position: absolute;
-    inset: 0;
+    top: 0;
+    right: 0;
+    width: calc(var(--u) * 1024);
+    height: calc(var(--u) * 470);
     margin: 0;
     aspect-ratio: auto;
   }
   .hero-visual picture {
-    -webkit-mask-image: none;
-    mask-image: none;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 14%);
+    mask-image: linear-gradient(to right, transparent 0, #000 14%);
+  }
+  /* Ends where the swoosh tapers out in the photo, 367 reference pixels across it */
+  .hero-swoosh {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    bottom: 0;
+    width: calc(100% - var(--u) * 657);
+    height: calc(var(--u) * 470);
+    pointer-events: none;
   }
   .hero-plane {
     left: 41.37%;
@@ -382,8 +593,8 @@ body {
     top: calc(var(--u) * 104);
     right: calc(var(--u) * 36);
     bottom: auto;
-    font-size: calc(var(--u) * 33);
-    transform: rotate(-10deg);
+    font-size: calc(var(--u) * 29);
+    transform: rotate(-9deg);
     line-height: 1.02;
   }
   .hero-decor {
@@ -391,14 +602,25 @@ body {
   }
 }
 
-/* --------------------------------------------------------------- Page bg */
+/* ------------------------------------------------------- Inner page banner */
 
-.page-sky {
+.page-hero {
   position: relative;
-  background:
-    radial-gradient(60% 18% at 8% 62%, rgb(214 232 250 / 0.55), transparent 70%),
-    radial-gradient(45% 12% at 95% 46%, rgb(224 238 252 / 0.6), transparent 70%),
-    linear-gradient(to bottom, #fafbfe 0%, #f8f9fd 30%, #f3f8ff 62%, #edf4fe 82%, #e2eefd 100%);
+  overflow: hidden;
+  background: linear-gradient(115deg, #fff 0%, #f4f9fe 38%, #d8eafa 70%, #a6d4f6 100%);
+}
+.page-hero-plane {
+  position: absolute;
+  right: 5%;
+  top: 28%;
+  width: 40%;
+  max-width: 30rem;
+  pointer-events: none;
+}
+.page-hero-plane img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 /* ----------------------------------------------------- Why-choose section */
@@ -409,11 +631,10 @@ body {
 }
 
 @media (min-width: 1024px) {
-  .why {
-    background: transparent;
-    height: min(calc(100vw * 205 / 1024), 24rem);
-  }
-  .hero-cta {
-    min-height: calc(var(--u) * 41);
+  .why-banner {
+    position: relative;
+    height: calc(var(--u) * 205);
+    /* The banner's navy starts 2.5 reference pixels down; line the rest of the row up with it */
+    background: linear-gradient(to bottom, var(--color-canvas) calc(var(--u) * 2.5), var(--color-why-navy) 0);
   }
 }

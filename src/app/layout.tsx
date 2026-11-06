@@ -1,18 +1,23 @@
 import type { Metadata, Viewport } from "next";
-import { Dancing_Script, Marck_Script, Playfair_Display, Poppins } from "next/font/google";
-import { site } from "@/config/site";
+import { Dancing_Script, Playfair_Display, Poppins } from "next/font/google";
+import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
+import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
+import { ScrollReveal } from "@/components/ScrollReveal";
+import { site, siteUrl } from "@/config/site";
 import "./globals.css";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
-  weight: ["600", "700"],
+  weight: ["700"],
   variable: "--font-playfair",
   display: "swap",
+  preload: false,
 });
 
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "500", "600", "800"],
   variable: "--font-poppins",
   display: "swap",
 });
@@ -24,17 +29,12 @@ const script = Dancing_Script({
   display: "swap",
 });
 
-const tagline = Marck_Script({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-tagline-face",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
-  // Set NEXT_PUBLIC_SITE_URL to the live domain when deploying
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
-  title: `${site.shortName} | Flights, Visas, Umrah & Tour Packages in Aluva, Kerala`,
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: `${site.shortName} | Flights, Visas, Umrah & Tour Packages in Aluva, Kerala`,
+    template: `%s | ${site.shortName}`,
+  },
   description: site.description,
   keywords: [
     "travel agency Aluva",
@@ -66,9 +66,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${poppins.variable} ${script.variable} ${tagline.variable}`}
+      data-scroll-behavior="smooth"
+      className={`${playfair.variable} ${poppins.variable} ${script.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        <a href="#main" className="skip-link">
+          Skip to main content
+        </a>
+        <ScrollReveal />
+        <Header />
+        {children}
+        <Footer />
+        <FloatingWhatsApp />
+      </body>
     </html>
   );
 }
