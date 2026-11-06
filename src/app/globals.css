@@ -1,0 +1,419 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-navy: #082d59;
+  --color-navy-dark: #05264c;
+  --color-sky: #38a9e8;
+  --color-gold: #ffbf32;
+  --color-page: #f5f9ff;
+  --color-why-navy: #022345;
+
+  --font-heading: var(--font-playfair), Georgia, serif;
+  --font-body: var(--font-poppins), system-ui, sans-serif;
+  --font-script: var(--font-script-face), cursive;
+  --font-tagline: var(--font-tagline-face), cursive;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4.5rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+/*
+ * The desktop design is proportional: 1rem equals 16px at the 1024px reference
+ * width and grows with the viewport, so the page keeps the composition of the
+ * reference at every desktop size.
+ */
+@media (min-width: 1024px) {
+  html {
+    font-size: min(calc(100vw / 64), 30px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  background: #f8f9fd;
+  color: var(--color-navy-dark);
+  font-family: var(--font-body);
+  overflow-x: clip;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-sky);
+  outline-offset: 2px;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ------------------------------------------------------------------ Hero */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(115deg, #fff 0%, #f4f9fe 38%, #d8eafa 75%, #b9dcf6 100%);
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 2;
+  padding: 5.25rem 1.25rem 0;
+}
+
+.hero-script {
+  display: block;
+  font-family: var(--font-script);
+  font-weight: 500;
+  color: #1f6fb8;
+  font-size: clamp(1.8rem, 10vw, 2.7rem);
+  line-height: 1.15;
+}
+
+.hero-brand {
+  display: block;
+  font-weight: 800;
+  color: var(--color-navy);
+  letter-spacing: 0;
+  font-size: clamp(3rem, 16.4vw, 4.4rem);
+  line-height: 1.08;
+}
+
+.hero-sub-brand {
+  display: block;
+  font-weight: 500;
+  color: var(--color-navy);
+  letter-spacing: 0.045em;
+  font-size: clamp(1.3rem, 6.9vw, 1.85rem);
+  line-height: 1.2;
+}
+
+.hero-subtitle {
+  margin: 0.8rem 0 0;
+  color: var(--color-navy-dark);
+  font-size: 1.0625rem;
+  line-height: 1.4;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.1rem;
+  min-height: 3rem;
+  padding: 0 0.55rem 0 1.4rem;
+  border-radius: 999px;
+  background: var(--color-navy);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  box-shadow: 0 6px 16px rgb(8 45 89 / 0.25);
+  transition: background-color 0.2s, transform 0.2s;
+}
+.hero-cta:hover {
+  background: #0d3f7a;
+  transform: translateY(-1px);
+}
+.hero-cta-arrow {
+  display: grid;
+  place-items: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--color-navy);
+}
+
+.hero-visual {
+  position: relative;
+  margin-top: 0.5rem;
+  aspect-ratio: 694 / 400;
+}
+.hero-visual picture {
+  display: block;
+  height: 100%;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 16%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 16%);
+}
+.hero-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-tagline {
+  position: absolute;
+  z-index: 2;
+  right: 0.7rem;
+  bottom: 41.5vw;
+  transform: rotate(-9deg);
+  font-family: var(--font-tagline);
+  color: var(--color-navy);
+  font-size: clamp(1.15rem, 5.6vw, 1.7rem);
+  line-height: 1.05;
+  text-align: center;
+}
+.hero-tagline span {
+  display: block;
+}
+.hero-tagline svg {
+  display: block;
+  width: 3.2em;
+  margin: 0.15em auto 0;
+}
+
+/* Plane position is its place in the sky photo, so it lines up with the reference at rest */
+.hero-plane {
+  position: absolute;
+  z-index: 1;
+  left: 13.5%;
+  top: 0.67%;
+  width: 57%;
+  pointer-events: none;
+  will-change: transform;
+  animation: hero-plane-in 2.4s linear 0.15s backwards;
+}
+.hero-plane-float {
+  will-change: transform;
+  animation: hero-plane-float 7s ease-in-out 2.55s infinite;
+}
+.hero-plane img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0.6vw 0.8vw rgb(8 45 89 / 0.16));
+}
+
+.hero-clouds {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 2%, #000 16%, #000 34%, transparent 52%);
+  mask-image: linear-gradient(to bottom, transparent 2%, #000 16%, #000 34%, transparent 52%);
+}
+.hero-cloud {
+  position: absolute;
+  aspect-ratio: 5 / 2;
+  background:
+    radial-gradient(closest-side, rgb(255 255 255 / 0.85), transparent) 8% 70% / 46% 62% no-repeat,
+    radial-gradient(closest-side, rgb(255 255 255 / 0.95), transparent) 42% 30% / 48% 80% no-repeat,
+    radial-gradient(closest-side, rgb(255 255 255 / 0.8), transparent) 78% 62% / 50% 64% no-repeat;
+  will-change: transform;
+}
+.hero-cloud-a {
+  left: 44%;
+  top: 8%;
+  width: 22%;
+  opacity: 0.7;
+  animation: hero-cloud-drift 46s ease-in-out infinite alternate;
+}
+.hero-cloud-b {
+  left: 68%;
+  top: 22%;
+  width: 18%;
+  opacity: 0.55;
+  animation: hero-cloud-drift 62s ease-in-out -18s infinite alternate-reverse;
+}
+.hero-cloud-c {
+  left: 56%;
+  top: 30%;
+  width: 26%;
+  opacity: 0.45;
+  animation: hero-cloud-drift 78s ease-in-out -30s infinite alternate;
+}
+
+/* The gold arc draws itself as the plane climbs along it */
+.hero-arc {
+  stroke-dasharray: 1;
+  animation: hero-arc-draw 2.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.15s backwards;
+}
+
+/* Words arrive one after another. "translate" leaves each element's own transform free. */
+.hero-script,
+.hero-brand,
+.hero-sub-brand,
+.hero-subtitle,
+.hero-cta,
+.hero-tagline {
+  animation: hero-rise 0.8s cubic-bezier(0.22, 0.8, 0.3, 1) backwards;
+}
+.hero-script { animation-delay: 0.1s; }
+.hero-brand { animation-delay: 0.22s; }
+.hero-sub-brand { animation-delay: 0.34s; }
+.hero-subtitle { animation-delay: 0.48s; }
+.hero-cta { animation-delay: 0.62s; }
+.hero-tagline { animation-delay: 1.5s; }
+.hero-tagline svg {
+  transform-origin: left center;
+  animation: hero-underline 0.7s ease-out 2.1s backwards;
+}
+.hero-cta-arrow svg {
+  animation: hero-arrow-nudge 3.2s ease-in-out 3s infinite;
+}
+
+@keyframes hero-plane-in {
+  0% { opacity: 0; transform: translate(-52%, 179%) rotate(6deg) scale(0.42); }
+  12% { opacity: 1; }
+  25% { transform: translate(-38.8%, 92%) rotate(4deg) scale(0.65); }
+  50% { transform: translate(-20.8%, 37.3%) rotate(2deg) scale(0.85); }
+  75% { transform: translate(-5.7%, 8.7%) rotate(0.5deg) scale(0.97); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes hero-plane-float {
+  0%, 100% { transform: translate(0, 0) rotate(0); }
+  35% { transform: translate(0.8%, -5%) rotate(-0.8deg); }
+  70% { transform: translate(-0.6%, 3.5%) rotate(0.5deg); }
+}
+@keyframes hero-cloud-drift {
+  from { transform: translateX(-30%); }
+  to { transform: translateX(30%); }
+}
+@keyframes hero-arc-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes hero-rise {
+  from { opacity: 0; translate: 0 0.9rem; }
+  to { opacity: 1; translate: 0 0; }
+}
+@keyframes hero-underline {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes hero-arrow-nudge {
+  0%, 70%, 100% { transform: translateX(0); }
+  80% { transform: translateX(3px); }
+  90% { transform: translateX(-1px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero *,
+  .hero *::before {
+    animation: none !important;
+  }
+}
+
+.hero-decor {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  /* --u is one pixel of the 1024px reference */
+  .hero {
+    --u: calc(100vw / 1024);
+    height: calc(var(--u) * 470);
+    background: #e8f2fb;
+  }
+  .hero-copy {
+    position: absolute;
+    left: calc(var(--u) * 44);
+    top: calc(var(--u) * 104);
+    padding: 0;
+  }
+  .hero-script {
+    font-size: calc(var(--u) * 41);
+    line-height: 1.2;
+  }
+  .hero-brand {
+    font-size: calc(var(--u) * 73);
+    line-height: 1.1;
+    margin-top: calc(var(--u) * 6);
+  }
+  .hero-sub-brand {
+    font-size: calc(var(--u) * 36);
+    line-height: 1.2;
+    margin-top: calc(var(--u) * 1);
+  }
+  .hero-subtitle {
+    margin-top: calc(var(--u) * 12);
+    font-size: calc(var(--u) * 19.5);
+    line-height: 1.3;
+  }
+  .hero-cta {
+    margin-top: calc(var(--u) * 22);
+    min-height: 2.75rem;
+    padding: 0 calc(var(--u) * 12) 0 calc(var(--u) * 22);
+    font-size: calc(var(--u) * 14.5);
+    gap: calc(var(--u) * 12);
+    box-shadow: none;
+  }
+  .hero-cta-arrow {
+    width: calc(var(--u) * 26);
+    height: calc(var(--u) * 26);
+  }
+  .hero-cta-arrow svg {
+    width: 55%;
+    height: 55%;
+  }
+  .hero-visual {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    aspect-ratio: auto;
+  }
+  .hero-visual picture {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .hero-plane {
+    left: 41.37%;
+    top: 15.46%;
+    width: 38.64%;
+  }
+  .hero-tagline {
+    top: calc(var(--u) * 104);
+    right: calc(var(--u) * 36);
+    bottom: auto;
+    font-size: calc(var(--u) * 33);
+    transform: rotate(-10deg);
+    line-height: 1.02;
+  }
+  .hero-decor {
+    height: calc(var(--u) * 470);
+  }
+}
+
+/* --------------------------------------------------------------- Page bg */
+
+.page-sky {
+  position: relative;
+  background:
+    radial-gradient(60% 18% at 8% 62%, rgb(214 232 250 / 0.55), transparent 70%),
+    radial-gradient(45% 12% at 95% 46%, rgb(224 238 252 / 0.6), transparent 70%),
+    linear-gradient(to bottom, #fafbfe 0%, #f8f9fd 30%, #f3f8ff 62%, #edf4fe 82%, #e2eefd 100%);
+}
+
+/* ----------------------------------------------------- Why-choose section */
+
+.why {
+  position: relative;
+  background: var(--color-why-navy);
+}
+
+@media (min-width: 1024px) {
+  .why {
+    background: transparent;
+    height: min(calc(100vw * 205 / 1024), 24rem);
+  }
+  .hero-cta {
+    min-height: calc(var(--u) * 41);
+  }
+}
