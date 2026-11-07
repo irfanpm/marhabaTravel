@@ -2,7 +2,7 @@ import Link from "next/link";
 import { services } from "@/config/site";
 import { ChevronRightIcon } from "./Icons";
 import { SectionHeading } from "./SectionHeading";
-import { serviceCardClass, ServiceTile } from "./ServiceCard";
+import { MoreHelpCard, serviceCardClass, ServiceTile } from "./ServiceCard";
 
 export function Services() {
   return (
@@ -22,6 +22,7 @@ export function Services() {
             </Link>
           </li>
         ))}
+        <MoreHelpCard />
       </ul>
       <div className="reveal mt-8 text-center lg:mt-[2.25rem]">
         <Link href="/services" className="btn btn-outline">

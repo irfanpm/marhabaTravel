@@ -25,7 +25,7 @@ export const BusIcon = (p: IconProps) => (
   </svg>
 );
 
-/** Passport booklet with a globe, used for Visit Visas and Passport Assistance. */
+/** Passport booklet with a globe. */
 export const PassportIcon = (p: IconProps) => (
   <svg {...base(p)}>
     <path
@@ -71,6 +71,39 @@ export const VisaStampIcon = (p: IconProps) => (
     >
       VISA
     </text>
+  </svg>
+);
+
+/** Document with a round seal. */
+export const AttestationIcon = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path
+      fillRule="evenodd"
+      d="M6 2h9l5 5v6.3a5.6 5.6 0 0 0-8.6 6.9l.3.8H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm2 7v1.6h8V9H8Zm0 3.4V14h5v-1.6H8Z"
+    />
+    <path
+      fillRule="evenodd"
+      d="M16.5 13.5a3.9 3.9 0 0 1 2.4 7l.6 2.7-3-1.4-3 1.4.6-2.7a3.9 3.9 0 0 1 2.4-7Zm0 2.1a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6Z"
+    />
+  </svg>
+);
+
+/** Calendar with a tick. */
+export const AppointmentIcon = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path
+      fillRule="evenodd"
+      d="M8 2h2v2h4V2h2v2h2.5A2.5 2.5 0 0 1 21 6.5v13a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 19.500v-13A2.500 2.500 0 0 1 5.500 4H8V2ZM5 9.500v10a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-10H5Zm11.600 2.600 1.300 1.400-6.700 6-3.300-3 1.300-1.400 2 1.800 5.400-4.800Z"
+    />
+  </svg>
+);
+
+/** Stethoscope. */
+export const StethoscopeIcon = (p: IconProps) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden {...p}>
+    <path d="M6 3H4.500v6a5 5 0 0 0 10 0V3H13" />
+    <path d="M9.500 14v2.500a4.500 4.500 0 0 0 9 0V15" />
+    <circle cx="18.500" cy="12.500" r="2.300" />
   </svg>
 );
 
@@ -184,6 +217,9 @@ const serviceIcons: Record<ServiceIcon, (p: IconProps) => React.JSX.Element> = {
   insurance: ShieldCheckIcon,
   umrah: MosqueIcon,
   passport: PassportIcon,
+  attestation: AttestationIcon,
+  appointment: AppointmentIcon,
+  medical: StethoscopeIcon,
 };
 
 export const ServiceGlyph = ({ icon, ...p }: IconProps & { icon: ServiceIcon }) => {

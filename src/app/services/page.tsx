@@ -3,14 +3,14 @@ import { CtaBand } from "@/components/CtaBand";
 import { ChevronRightIcon } from "@/components/Icons";
 import { PageHero } from "@/components/PageHero";
 import { SectionHeading } from "@/components/SectionHeading";
-import { serviceCardClass, ServiceTile } from "@/components/ServiceCard";
+import { MoreHelpCard, serviceCardClass, ServiceTile } from "@/components/ServiceCard";
 import { enquiryLink, serviceSteps, services } from "@/config/site";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/services" },
   title: "Our Services",
   description:
-    "Flight tickets, bus tickets, visit visas, tour packages, visa stamping, travel insurance, Umrah packages and online passport assistance from MARHABA Travel & Holidays, Aluva.",
+    "Flight tickets, bus tickets, visit visas, Umrah packages, tour packages, online passport assistance, certificate attestation, travel insurance, VFS appointments, medical appointments and visa stamping from MARHABA Travel & Holidays, Aluva.",
 };
 
 export default function ServicesPage() {
@@ -43,6 +43,7 @@ export default function ServicesPage() {
               </a>
             </li>
           ))}
+          <MoreHelpCard />
         </ul>
       </section>
 

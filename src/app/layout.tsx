@@ -45,6 +45,9 @@ export const metadata: Metadata = {
     "tour packages",
     "travel insurance",
     "passport assistance",
+    "certificate attestation",
+    "VFS appointment",
+    "medical appointment",
   ],
   openGraph: {
     title: site.shortName,

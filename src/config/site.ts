@@ -7,7 +7,7 @@ export const site = {
   name: "MARHABA TRAVEL & HOLIDAYS",
   shortName: "Marhaba Travel & Holidays",
   description:
-    "MARHABA Travel & Holidays in Aluva, Kerala: flight tickets, bus tickets, visit visas, tour packages, visa stamping, travel insurance, Umrah packages and online passport assistance.",
+    "MARHABA Travel & Holidays in Aluva, Kerala: flight tickets, bus tickets, visit visas, Umrah packages, tour packages, online passport assistance, certificate attestation, travel insurance, VFS appointments, medical appointments and visa stamping.",
   phoneDisplay: "+91 99462 01612",
   phoneHref: "tel:+919946201612",
   whatsappNumber: "919946201612",
@@ -63,7 +63,10 @@ export type ServiceIcon =
   | "visa-stamp"
   | "insurance"
   | "umrah"
-  | "passport";
+  | "passport"
+  | "attestation"
+  | "appointment"
+  | "medical";
 
 export const services: {
   slug: string;
@@ -98,6 +101,13 @@ export const services: {
       "Guidance and application support for visit visas, including help understanding which documents to prepare.",
   },
   {
+    slug: "umrah-packages",
+    title: "Umrah Packages",
+    icon: "umrah",
+    summary: "Umrah journeys planned with care.",
+    description: "Umrah packages planned with care, with personal support as you prepare for your pilgrimage.",
+  },
+  {
     slug: "tour-packages",
     title: "Tour Packages",
     icon: "tour",
@@ -105,11 +115,18 @@ export const services: {
     description: "Tour packages planned around your destination, your dates and the people travelling with you.",
   },
   {
-    slug: "visa-stamping",
-    title: "Visa Stamping",
-    icon: "visa-stamp",
-    summary: "Help with your visa stamping process.",
-    description: "Help with the visa stamping process, from preparing your documents to submitting them.",
+    slug: "online-passport-assistance",
+    title: "Online Passport Assistance",
+    icon: "passport",
+    summary: "Support with online passport applications.",
+    description: "Support with online passport applications, including filling in the forms and preparing your documents.",
+  },
+  {
+    slug: "certificate-attestation",
+    title: "Certificate Attestation",
+    icon: "attestation",
+    summary: "Help getting your certificates attested.",
+    description: "Help getting your certificates attested, including what to prepare and how the process works.",
   },
   {
     slug: "travel-insurance",
@@ -119,18 +136,25 @@ export const services: {
     description: "Travel insurance arranged for your trip, with help understanding which cover suits your journey.",
   },
   {
-    slug: "umrah-packages",
-    title: "Umrah Packages",
-    icon: "umrah",
-    summary: "Umrah journeys planned with care.",
-    description: "Umrah packages planned with care, with personal support as you prepare for your pilgrimage.",
+    slug: "vfs-appointment",
+    title: "VFS Appointment",
+    icon: "appointment",
+    summary: "Help booking your VFS appointment.",
+    description: "Help booking your VFS appointment, so you know the date and what to bring with you.",
   },
   {
-    slug: "online-passport-assistance",
-    title: "Online Passport Assistance",
-    icon: "passport",
-    summary: "Support with online passport applications.",
-    description: "Support with online passport applications, including filling in the forms and preparing your documents.",
+    slug: "medical-appointment",
+    title: "Medical Appointment",
+    icon: "medical",
+    summary: "Help booking your medical appointment.",
+    description: "Help booking the medical appointment needed for your travel or visa process.",
+  },
+  {
+    slug: "visa-stamping",
+    title: "Visa Stamping",
+    icon: "visa-stamp",
+    summary: "Help with your visa stamping process.",
+    description: "Help with the visa stamping process, from preparing your documents to submitting them.",
   },
 ];
 
